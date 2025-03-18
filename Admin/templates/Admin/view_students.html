@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony Hub - Admin View All Students</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #FFD700;
+            --secondary-yellow: #F2C94C;
+            --dark-black: #121212;
+            --medium-black: #1E1E1E;
+            --light-black: #2D2D2D;
+        }
+        
+        body {
+            background-color: var(--dark-black);
+            color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .harmony-navbar {
+            background-color: var(--medium-black);
+            border-bottom: 3px solid var(--primary-yellow);
+            padding: 12px 0;
+        }
+        
+        .harmony-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-yellow);
+        }
+        
+        .page-title {
+            color: var(--primary-yellow);
+            font-weight: 600;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 5px solid var(--primary-yellow);
+            padding-left: 15px;
+        }
+        
+        .table-container {
+            background-color: var(--light-black);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+        
+        .harmony-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .harmony-table thead {
+            background-color: var(--primary-yellow);
+            color: var(--dark-black);
+        }
+        
+        .harmony-table th {
+            padding: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+        
+        .harmony-table th:first-child {
+            border-top-left-radius: 8px;
+        }
+        
+        .harmony-table th:last-child {
+            border-top-right-radius: 8px;
+        }
+        
+        .harmony-table td {
+            padding: 12px 15px;
+            border-top: none;
+            color: #0d0e0f;
+            vertical-align: middle;
+        }
+        
+        .harmony-table tbody tr {
+            border-bottom: 1px solid #343a40;
+            transition: all 0.2s ease;
+        }
+        
+        .harmony-table tbody tr:hover {
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+        
+        .harmony-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        .empty-message {
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background-color: var(--primary-yellow);
+            color: var(--dark-black);
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .back-btn:hover {
+            background-color: var(--secondary-yellow);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(242, 201, 76, 0.4);
+            color: var(--dark-black);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        .student-count {
+            background-color: var(--light-black);
+            border-left: 3px solid var(--primary-yellow);
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: inline-block;
+        }
+        
+        .student-count span {
+            color: var(--primary-yellow);
+            font-weight: 600;
+        }
+        
+       
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="harmony-navbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="harmony-logo">
+                <i class="fas fa-music me-2"></i> HARMONY HUB
+            </div>
+            <div class="admin-badge">
+                <span class="badge bg-warning text-dark">
+                    <i class="fas fa-user-shield me-1"></i> Admin Panel
+                </span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <h2 class="page-title">
+            <i class="fas fa-users me-2"></i> All Students
+        </h2>
+        
+        <div class="student-count">
+            Currently showing <span>{% if students %}{{ students|length }}{% else %}0{% endif %}</span> students
+        </div>
+        
+        <div class="table-container">
+            <table class="table harmony-table">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-id-card me-2"></i>ID</th>
+                        <th><i class="fas fa-user me-2"></i>Name</th>
+                        <th><i class="fas fa-envelope me-2"></i>Email</th>
+                        <th><i class="fas fa-phone me-2"></i>Phone</th>
+                        <th><i class="fas fa-map-marker-alt me-2"></i>Address</th>
+                        <th><i class="fas fa-calendar-alt me-2"></i>Enrolled Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.id }}</td>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.phone_number }}</td>
+                            <td>{{ student.address }}</td>
+                            <td>{{ student.date_registered }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="empty-message">
+                                <i class="fas fa-info-circle me-2"></i> No students found.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <a href="{% url 'Admin:Admin_home' %}" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

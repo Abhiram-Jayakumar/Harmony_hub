@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony Hub - Admin View All Teachers</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --harmony-yellow: #FFD700;
+            --harmony-black: #121212;
+            --harmony-gray: #333333;
+            --harmony-light-yellow: #FFF0B3;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .harmony-navbar {
+            background-color: var(--harmony-black);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .harmony-logo {
+            color: var(--harmony-yellow);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--harmony-black) 0%, var(--harmony-gray) 100%);
+            color: var(--harmony-yellow);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 4px solid var(--harmony-yellow);
+        }
+        
+        .page-title {
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--harmony-yellow);
+        }
+        
+        .teacher-table {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .teacher-table thead {
+            background-color: var(--harmony-black);
+            color: var(--harmony-yellow);
+        }
+        
+        .teacher-table th {
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 2px solid var(--harmony-yellow);
+        }
+        
+        .teacher-table tbody tr:nth-child(odd) {
+            background-color: rgba(255, 215, 0, 0.05);
+        }
+        
+        .teacher-table tbody tr:hover {
+            background-color: rgba(255, 215, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        
+        .teacher-table td {
+            padding: 0.8rem 1rem;
+            vertical-align: middle;
+        }
+        
+        .teacher-img {
+            border-radius: 50%;
+            border: 2px solid var(--harmony-yellow);
+            object-fit: cover;
+            width: 50px;
+            height: 50px;
+        }
+        
+        .badge-approved {
+            background-color: var(--harmony-yellow);
+            color: var(--harmony-black);
+            font-weight: 600;
+        }
+        
+        .badge-pending {
+            background-color: var(--harmony-gray);
+            color: var(--harmony-light-yellow);
+            font-weight: 600;
+        }
+        
+        .back-btn {
+            background-color: var(--harmony-black);
+            color: var(--harmony-yellow);
+            border: 2px solid var(--harmony-yellow);
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 2rem;
+        }
+        
+        .back-btn:hover {
+            background-color: var(--harmony-yellow);
+            color: var(--harmony-black);
+            transform: translateY(-2px);
+        }
+        
+        .back-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .empty-state {
+            background-color: rgba(255, 215, 0, 0.05);
+            border: 2px dashed var(--harmony-yellow);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: var(--harmony-gray);
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--harmony-yellow) var(--harmony-black);
+        }
+        
+        .table-responsive::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .table-responsive::-webkit-scrollbar-track {
+            background: var(--harmony-black);
+        }
+        
+        .table-responsive::-webkit-scrollbar-thumb {
+            background-color: var(--harmony-yellow);
+            border-radius: 20px;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: var(--harmony-yellow);
+            border-color: var(--harmony-yellow);
+            color: var(--harmony-black);
+        }
+        
+        .pagination .page-link {
+            color: var(--harmony-black);
+        }
+        
+        .teacher-bio {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar harmony-navbar navbar-dark">
+        <div class="container">
+            <a class="navbar-brand harmony-logo" href="{% url 'Admin:Admin_home' %}">
+                <i class="fas fa-music me-2"></i> HARMONY HUB ADMIN
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">All Teachers</h1>
+            <p class="lead text-light">Manage and view all registered teachers</p>
+        </div>
+    </header>
+
+    <div class="container mb-5">
+        <!-- Table Section -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h5 class="mb-0">Teacher Directory</h5>
+                        <small class="text-muted">Total teachers: {{ teachers|length }}</small>
+                    </div>
+                    <div class="input-group" style="max-width: 300px;">
+                        <input type="text" class="form-control" placeholder="Search teachers...">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless teacher-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>ID Number</th>
+                                <th>Subjects</th>
+                                <th>Experience</th>
+                                <th>Profile</th>
+                                <th>Bio</th>
+                                <th>Address</th>
+                                <th>Location</th>
+                                <th>Registered</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for teacher in teachers %}
+                                <tr>
+                                    <td>{{ teacher.id }}</td>
+                                    <td>
+                                        <div class="fw-bold">{{ teacher.name }}</div>
+                                    </td>
+                                    <td>{{ teacher.email }}</td>
+                                    <td>{{ teacher.phone_number }}</td>
+                                    <td>{{ teacher.id_number }}</td>
+                                    <td>{{ teacher.subjects }}</td>
+                                    <td>{{ teacher.experience }} years</td>
+                                    <td>
+                                        {% if teacher.teacher_image %}
+                                            <img src="{{ teacher.teacher_image.url }}" alt="Teacher Image" class="teacher-img">
+                                        {% else %}
+                                            <div class="text-center">
+                                                <i class="fas fa-user-circle fa-2x text-muted"></i>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="teacher-bio">{{ teacher.teacher_bio|truncatewords:15 }}</div>
+                                    </td>
+                                    <td>{{ teacher.address }}</td>
+                                    <td>{{ teacher.location }}</td>
+                                    <td>{{ teacher.date_registered|date:"Y-m-d H:i" }}</td>
+                                    <td>
+                                        {% if teacher.teacher_approved_status %}
+                                            <span class="badge badge-approved">Approved</span>
+                                        {% else %}
+                                            <span class="badge badge-pending">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i> View</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-check-circle me-2"></i> Approve</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash me-2"></i> Delete</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="14">
+                                        <div class="empty-state">
+                                            <i class="fas fa-user-slash fa-3x mb-3"></i>
+                                            <h5>No Teachers Found</h5>
+                                            <p class="mb-0">There are no teachers registered in the system yet.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Back Button -->
+        <div class="text-center mt-4">
+            <a href="{% url 'Admin:Admin_home' %}" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">© 2025 Harmony Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -14,6 +14,9 @@ urlpatterns=[
     path('admin/reject-teacher/<int:teacher_id>/',views.reject_teacher, name='reject_teacher'),
     path("admin/complaints/",views. admin_view_complaints, name="admin_view_complaints"),
     path("admin/complaints/update/<int:complaint_id>/", views.update_complaint_status, name="update_complaint_status"),
+    path('admin/view-students/', views.view_students, name='view_students'),
+    path('admin/view-teachers/', views.view_teachers, name='view_teachers'),
+    path('booking-statistics/', views.booking_statistics, name='booking_statistics'),
 
 
 ]
