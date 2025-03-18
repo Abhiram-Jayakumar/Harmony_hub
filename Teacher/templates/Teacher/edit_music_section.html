@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Music Section - HARMONY HUB</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFD700;
+            --dark-color: #121212;
+            --light-color: #f5f5f5;
+            --accent-color: #FFD700;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background-color: var(--dark-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: bold;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #f5f5f5;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a.logout {
+            color: var(--primary-color);
+        }
+        
+        .page-header {
+            color: var(--dark-color);
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .form-card {
+            background-color: white;
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 0;
+        }
+        
+        .form-header {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .form-accent {
+            position: absolute;
+            height: 100%;
+            width: 8px;
+            background-color: var(--primary-color);
+            left: 0;
+            top: 0;
+        }
+        
+        .form-content {
+            padding: 30px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 8px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(255, 215, 0, 0.25);
+        }
+        
+        .btn-success {
+            background-color: var(--dark-color);
+            border-color: var(--dark-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            background-color: #000;
+            border-color: #000;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            border-left: 4px solid var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'Teacher:Teacher_home' %}">HARMONY HUB</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="nav-links">
+                    <a href="{% url 'Teacher:teacher_profile'%}">Teacher Profile</a>
+                    <a href="{% url 'Teacher:add_music_section'%}">Add Section</a>
+                    <a href="{% url 'Teacher:view_music_sections'%}" class="active">Manage Section</a>
+                    <a href="{% url 'Teacher:teacher_bookings'%}">My Bookings</a>
+                    <a href="{% url 'Student:Index'%}" class="logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="page-header text-center">Edit Music Section</h2>
+
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                    <p class="mb-0">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="form-card">
+                    <div class="form-header">
+                        <div class="form-accent"></div>
+                        <h3>Section Details</h3>
+                        <p class="mb-0">Update your music section information</p>
+                    </div>
+                    
+                    <div class="form-content">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Section Name</label>
+                                        <input type="text" name="section_name" class="form-control" value="{{ section.section_name }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Instrument</label>
+                                        <input type="text" name="instrument" class="form-control" value="{{ section.instrument }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Rate per Hour ($)</label>
+                                        <input type="number" name="rate_per_hour" class="form-control" value="{{ section.rate_per_hour }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Available Days</label>
+                                        <input type="text" name="available_days" class="form-control" value="{{ section.available_days }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Available Time</label>
+                                        <input type="time" name="available_time" class="form-control" value="{{ section.available_time }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" name="location" class="form-control" value="{{ section.location }}">
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea name="description" class="form-control" rows="4">{{ section.description }}</textarea>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Section Image</label>
+                                <input type="file" name="section_image" class="form-control">
+                                {% if section.section_image %}
+                                    <small class="text-muted">Current image: {{ section.section_image.name }}</small>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <div class="form-check">
+                                    <input type="checkbox" name="is_active" class="form-check-input" id="isActive" {% if section.is_active %}checked{% endif %}>
+                                    <label class="form-check-label" for="isActive">Active</label>
+                                </div>
+                                <small class="text-muted">When checked, this section will be visible to students</small>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-success px-4">Update Section</button>
+                                <a href="{% url 'Teacher:view_music_sections' %}" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

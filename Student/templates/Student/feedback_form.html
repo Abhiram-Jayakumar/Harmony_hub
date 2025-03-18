@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Feedback - HARMONY HUB</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFD700;
+            --dark-color: #121212;
+            --light-color: #f5f5f5;
+            --accent-color: #FFD700;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background-color: var(--dark-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: bold;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .page-header {
+            color: var(--dark-color);
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .feedback-card {
+            background-color: white;
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 0;
+        }
+        
+        .feedback-header {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .feedback-accent {
+            position: absolute;
+            height: 100%;
+            width: 8px;
+            background-color: var(--primary-color);
+            left: 0;
+            top: 0;
+        }
+        
+        .feedback-content {
+            padding: 30px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            box-shadow: none;
+            border-color: var(--primary-color);
+        }
+        
+        .star-rating {
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .star-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .star-option:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .star-option input {
+            margin-right: 10px;
+        }
+        
+        .stars {
+            color: var(--primary-color);
+            letter-spacing: 2px;
+        }
+        
+        .btn-primary {
+            background-color: var(--dark-color);
+            border-color: var(--dark-color);
+            color: var(--primary-color);
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #000;
+            border-color: #000;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .teacher-info {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'Student:student_home' %}">HARMONY HUB</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="nav-links">
+                    <a href="{% url 'Student:student_profile'%}" style="color: #f5f5f5;">Student Profile</a>
+                    <a href="{% url 'Student:search_teachers'%}" style="color: #f5f5f5;">Search Teachers</a>
+                    <a href="{% url 'Student:student_bookings'%}" style="color: white;">My Bookings</a>
+                    <a href="{% url 'Student:login'%}" style="color: #FFD700;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="page-header text-center">Submit Feedback</h2>
+                
+                <div class="feedback-card">
+                    <div class="feedback-header">
+                        <div class="feedback-accent"></div>
+                        <p class="teacher-info">For: {{ teacher.name }}</p>
+                    </div>
+                    
+                    <div class="feedback-content">
+                        <form method="POST">
+                            {% csrf_token %}
+                            
+                            <div class="mb-4">
+                                <label for="rating" class="form-label">Rating:</label>
+                                <div class="star-rating">
+                                    <div class="star-option">
+                                        <input type="radio" name="rating" id="rating5" value="5" checked>
+                                        <label for="rating5"><span class="stars">★★★★★</span> <span class="ms-2">(5 Stars) Excellent</span></label>
+                                    </div>
+                                    <div class="star-option">
+                                        <input type="radio" name="rating" id="rating4" value="4">
+                                        <label for="rating4"><span class="stars">★★★★☆</span> <span class="ms-2">(4 Stars) Very Good</span></label>
+                                    </div>
+                                    <div class="star-option">
+                                        <input type="radio" name="rating" id="rating3" value="3">
+                                        <label for="rating3"><span class="stars">★★★☆☆</span> <span class="ms-2">(3 Stars) Good</span></label>
+                                    </div>
+                                    <div class="star-option">
+                                        <input type="radio" name="rating" id="rating2" value="2">
+                                        <label for="rating2"><span class="stars">★★☆☆☆</span> <span class="ms-2">(2 Stars) Fair</span></label>
+                                    </div>
+                                    <div class="star-option">
+                                        <input type="radio" name="rating" id="rating1" value="1">
+                                        <label for="rating1"><span class="stars">★☆☆☆☆</span> <span class="ms-2">(1 Star) Poor</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="comment" class="form-label">Your Feedback:</label>
+                                <textarea name="comment" id="comment" rows="4" class="form-control" placeholder="Please share your experience with this teacher..."></textarea>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{% url 'Student:student_bookings' %}" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left"></i> Back
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle"></i> Submit Feedback
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/bootstrap-icons.min.js"></script>
+</body>
+</html>

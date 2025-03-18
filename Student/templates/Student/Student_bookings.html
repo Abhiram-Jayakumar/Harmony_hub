@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - HARMONY HUB</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFD700;
+            --dark-color: #121212;
+            --light-color: #f5f5f5;
+            --accent-color: #FFD700;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background-color: var(--dark-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: bold;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .page-header {
+            color: var(--dark-color);
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .bookings-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-top: 5px solid var(--primary-color);
+        }
+        
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .table thead {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+        }
+        
+        .table thead th {
+            border: none;
+            padding: 15px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+        
+        .table thead th:first-child {
+            border-top-left-radius: 10px;
+        }
+        
+        .table thead th:last-child {
+            border-top-right-radius: 10px;
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(255, 215, 0, 0.05);
+        }
+        
+        .table tbody td {
+            padding: 15px;
+            vertical-align: middle;
+            border-color: #eee;
+        }
+        
+        .badge {
+            font-weight: 500;
+            padding: 7px 12px;
+            border-radius: 50px;
+        }
+        
+        .badge.bg-warning {
+            background-color: #ffeeba !important;
+            color: #856404 !important;
+        }
+        
+        .badge.bg-success {
+            background-color: #d4edda !important;
+            color: #155724 !important;
+        }
+        
+        .badge.bg-danger {
+            background-color: #f8d7da !important;
+            color: #721c24 !important;
+        }
+        
+        .badge.bg-info {
+            background-color: #d1ecf1 !important;
+            color: #0c5460 !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--dark-color);
+            border-color: var(--dark-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #000;
+            border-color: #000;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-success {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--dark-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            background-color: #e6c200;
+            border-color: #e6c200;
+            color: var(--dark-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.3);
+        }
+        
+        .btn-find-more {
+            background-color: var(--dark-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--dark-color);
+        }
+        
+        .btn-find-more:hover {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .no-bookings {
+            padding: 50px 0;
+            text-align: center;
+            color: #6c757d;
+        }
+        
+        .no-bookings i {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'Student:student_home' %}">HARMONY HUB</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="nav-links">
+                    <a href="{% url 'Student:student_profile'%}" style="color: #f5f5f5;">Student Profile</a>
+                    <a href="{% url 'Student:search_teachers'%}" style="color: #f5f5f5;">Search Teachers</a>
+                    <a href="{% url 'Student:student_bookings'%}" style="color: #FFD700;">My Bookings</a>
+                    <a href="{% url 'Student:login'%}" style="color: #f5f5f5;">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h2 class="page-header text-center">My Bookings</h2>
+        
+        <div class="bookings-container">
+            {% if bookings %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Music Section</th>
+                                <th>Teacher</th>
+                                <th>Date</th>
+                                <th>Time Slot</th>
+                                <th>Status</th>
+                                <th>Payment</th>
+                                <th>Actions</th>
+                                <th>Feedback</th>
+                                <th>Chat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in bookings %}
+                            <tr>
+                                <td>{{ booking.music_section.instrument }}</td>
+                                <td>{{ booking.teacher.name }}</td>
+                                <td>{{ booking.booking_date }}</td>
+                                <td>{{ booking.time_slot }}</td>
+                                <td>
+                                    {% if booking.status == "Pending" %}
+                                        <span class="badge bg-warning">Pending</span>
+                                    {% elif booking.status == "Confirmed" %}
+                                        <span class="badge bg-success">Confirmed</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Cancelled</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if booking.payment_status == "Pending" %}
+                                        <span class="badge bg-warning">Pending</span>
+                                    {% elif booking.payment_status == "Completed" %}
+                                        <span class="badge bg-success">Paid</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Failed</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if booking.status == "Confirmed" and booking.payment_status == "Pending" %}
+                                        <a href="{% url 'Student:make_payment' booking.id %}" class="btn btn-sm btn-primary">Pay Now</a>
+                                    {% elif booking.payment_status == "Completed" %}
+                                        <span class="badge bg-info">Paid</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if booking.status == "Confirmed" and booking.payment_status == "Completed" %}
+                                        <a href="{% url 'Student:submit_feedback' booking.teacher.id %}" class="btn btn-sm btn-primary">
+                                            Give Feedback
+                                        </a>
+                                    {% else %}
+                                        <span class="text-muted small">Not available</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'Student:chat' booking.teacher.id %}" class="btn btn-sm btn-success">Chat</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-bookings">
+                    <i class="bi bi-calendar-x"></i>
+                    <h4>No Bookings Found</h4>
+                    <p>You haven't booked any music lessons yet.</p>
+                </div>
+            {% endif %}
+            
+            <div class="text-center mt-4">
+                <a href="{% url 'Student:search_teachers' %}" class="btn btn-find-more">
+                    <i class="bi bi-search me-2"></i> Find More Lessons
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.css"></script>
+</body>
+</html>

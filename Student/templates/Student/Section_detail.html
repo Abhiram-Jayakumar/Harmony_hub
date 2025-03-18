@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HARMONY HUB - Music Section Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #FFD700, #ff9966);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .logout {
+            color: #FFD700 !important;
+        }
+        
+        .section-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .section-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 100%;
+            align-items: center;
+        }
+        
+        .section-title {
+            color: #1a1a2e;
+            font-weight: 700;
+            border-bottom: 2px solid #FFD700;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .teacher-details {
+            background-color: #b3eef8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .feedback-details {
+            background-color: #84f17e;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .teacher-details h4 {
+            color: #1a1a2e;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .btn-book {
+            background-color: #FFD700;
+            color: #1a1a2e;
+            border: none;
+            font-weight: 600;
+            padding: 10px 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-book:hover {
+            background-color: #e6c200;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-back {
+            background-color: #1a1a2e;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            background-color: #2a2a4e;
+        }
+        
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .section-info p {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .section-info strong {
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            nav {
+                flex-direction: column;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <div class="logo-icon">🎵</div>
+                    <h1>HARMONY HUB</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="{% url 'Student:search_teachers'%}" style="color: #f5f5f5;">Search Teachers</a>
+                    <a href="{% url 'Student:student_bookings'%}" style="color: white;">My Bookings</a>
+                    <a href="{% url 'Student:login'%}" style="color: #FFD700;" class="logout">Logout</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title text-center mb-4">{{ section.section_name }}</h2>
+    
+        <div class="section-card">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="section-image">
+                        <img src="{{ section.section_image.url }}" class="card-img-top" alt="Section Image" style="width: 100%; height: auto; object-fit: contain; max-height: 100%;" >                    </div>
+                </div>
+                <div class="col-md-6 section-info">
+                    <h3 class="mb-4">Instructor: {{ section.teacher.name }}</h3>
+                    <p><strong>Instrument:</strong> {{ section.instrument }}</p>
+                    <p><strong>Location:</strong> {{ section.location }}</p>
+                    <p><strong>Rate:</strong> ${{ section.rate_per_hour }} per hour</p>
+                    <p><strong>Available Days:</strong> {{ section.available_days }}</p>
+                    <p><strong>Time:</strong> {{ section.available_time }}</p>
+                    <p><strong>Description:</strong> {{ section.description }}</p>
+    
+                    <div class="teacher-details">
+                        <h4>Teacher Details:</h4>
+                        <p><strong>Email:</strong> {{ section.teacher.email }}</p>
+                        <p><strong>Phone:</strong> {{ section.teacher.phone_number }}</p>
+                        <p><strong>Experience:</strong> {{ section.teacher.experience }} years</p>
+                        <p><strong>Bio:</strong> {{ section.teacher.teacher_bio }}</p>
+                    </div>
+                    <div class="feedback-details">
+                        <div class="feedback-section mt-5">
+                            <h3 class="text-center">Student Feedback & Ratings</h3>
+                            
+                            {% if feedbacks %}
+                                {% for feedback in feedbacks %}
+                                    <div class="card mt-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ feedback.student.name }}</h5>
+                                            <p><strong>Rating:</strong> 
+                                                {% for _ in "x"|rjust:feedback.rating %}
+                                                    ⭐
+                                                {% endfor %}
+                                            </p>
+                                            <p>{{ feedback.comment }}</p>
+                                            <p class="text-muted">Posted on: {{ feedback.created_at }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted text-center">No feedback available yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="{% url 'Student:book_teacher' section.id %}" class="btn btn-book btn-lg">Book Now</a>
+                        <a href="{% url 'Student:search_teachers' %}" class="btn btn-back mt-3">Back to Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer>
+        <div class="container">
+            <div class="logo mx-auto" style="width: fit-content;">
+                <div class="logo-icon">🎵</div>
+                <h1>HARMONY HUB</h1>
+            </div>
+            <p>&copy; 2025 HARMONY HUB - Connecting Music Teachers and Students</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

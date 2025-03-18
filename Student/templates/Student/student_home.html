@@ -1,0 +1,752 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HARMONY HUB - Student Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #222d5a;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #FFD700, #ff9966);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .hero {
+            height: 500px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://i.postimg.cc/pryxY10d/istockphoto-1219335974-612x612.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 60px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #FFD700;
+            color: #222d5a;
+        }
+
+        .btn-primary:hover {
+            background-color: #e6c200;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .categories {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: #222d5a;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .category-img {
+            height: 160px;
+            background-color: #eee;
+        }
+
+        .category-content {
+            padding: 25px;
+        }
+
+        .category-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #222d5a;
+        }
+
+        .category-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .featured-teachers {
+            background-color: #f0f3f8;
+            padding: 60px 0;
+            margin-bottom: 60px;
+        }
+
+        .teacher-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .teacher-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .teacher-img {
+            height: 200px;
+            background-color: #ddd;
+        }
+
+        .teacher-info {
+            padding: 25px;
+        }
+
+        .teacher-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: #222d5a;
+        }
+
+        .teacher-info .specialty {
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .teacher-info .rating {
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+
+        .how-it-works {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .step {
+            max-width: 280px;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #e6eeff;
+            color: #222d5a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            color: #222d5a;
+            margin-bottom: 10px;
+        }
+
+        .testimonials {
+            background-color: #222d5a;
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 60px;
+        }
+
+        .testimonials .section-title h2 {
+            color: white;
+        }
+
+        .testimonials .section-title p {
+            color: #ccc;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .testimonial-card .quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .student-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 15px;
+        }
+
+        .student-name {
+            font-weight: bold;
+        }
+
+        .student-details {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .cta {
+            background-image: linear-gradient(135deg, #222d5a, #1a1a2e);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 10px;
+            margin-bottom: 60px;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            background-color: #222d5a;
+            color: white;
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-content p {
+            margin-top: 20px;
+            color: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                height: 400px;
+            }
+
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 60px 0;
+            background-color: #f9f9f9;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-quote {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid #FFD700;
+        }
+
+        .testimonial-author {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            font-weight: bold;
+            color: #1a1a2e;
+        }
+
+        .author-title {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 60px 0;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .faq-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-item h3 {
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .faq-item h3:before {
+            content: "Q:";
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 60px 0;
+            background-color: #1a1a2e;
+            text-align: center;
+            margin: 40px 0;
+            border-radius: 10px;
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cta-content h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-content p {
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+
+            .steps,
+            .testimonial-grid,
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-grid {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <div class="logo-icon">🎵</div>
+                    <h1>HARMONY HUB</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="{% url 'Student:student_profile'%}" style="color: #f5f5f5;">Student Profile</a>
+                    <a href="{% url 'Student:search_teachers'%}" style="color: #f5f5f5;">Search Teachers</a>
+                    <a href="{% url 'Student:student_bookings'%}" style="color: white;">My Bookings</a>
+                    <a href="{% url 'Student:login'%}" style="color: #FFD700;">Logout</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>Find Your Perfect Music Teacher</h2>
+        <p>Discover talented instructors, book lessons, and start your musical journey today with HARMONY HUB.</p>
+        <div>
+            <a href="{% url 'Student:search_teachers'%}" class="btn btn-primary">Find Teachers</a>
+            <a href="{% url 'Student:student_bookings'%}" class="btn btn-outline">View My Bookings</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="categories">
+            <div class="section-title">
+                <h2>Explore Music Categories</h2>
+                <p>Discover lessons across a wide range of instruments and musical styles</p>
+            </div>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://i.postimg.cc/0y7vfSC7/GL-30.png" alt="" class="img-fluid" style="height: fit-content; width: 100%; object-fit: cover; ">
+                    </div>
+                    <div class="category-content">
+                        <h3>Piano Lessons</h3>
+                        <p>Learn from classical to contemporary piano techniques</p>
+                        <a href="{% url 'Student:search_teachers'%}" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://i.postimg.cc/RF5jCt09/shopping.webp" alt="" class="img-fluid" style="height: fit-content; width: 100%; object-fit: cover; ">
+                    </div>
+                    <div class="category-content">
+                        <h3>Guitar Lessons</h3>
+                        <p>Master acoustic, electric, or bass guitar with expert guidance</p>
+                        <a href="{% url 'Student:search_teachers'%}" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://i.postimg.cc/c1cVZrGy/LL202209294259.jpg" alt="" class="img-fluid" style="height: fit-content; width: 100%; object-fit: cover; ">
+                    </div>
+                    <div class="category-content">
+                        <h3>Vocal Training</h3>
+                        <p>Develop your singing voice with personalized coaching</p>
+                        <a href="{% url 'Student:search_teachers'%}" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://i.postimg.cc/x1X7K5Jn/musical-notes.webp" alt="" class="img-fluid" style="height: fit-content; width: 100%; object-fit: cover; ">
+                    </div>
+                    <div class="category-content">
+                        <h3>Music Theory</h3>
+                        <p>Build a strong foundation in music fundamentals</p>
+                        <a href="{% url 'Student:search_teachers'%}" class="btn btn-primary">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="featured-teachers">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Teachers</h2>
+                <p>Meet our top-rated music instructors ready to guide your musical journey</p>
+            </div>
+            <div class="teacher-grid">
+                <div class="teacher-card">
+                    <div class="teacher-img">
+                        <img src="https://i.postimg.cc/m2D6sjSC/photo-1517230878791-4d28214057c2.avif" alt="" class="img-fluid" style="height: fit-content; width: 100%; object-fit: cover; ">
+                    </div>
+                    <div class="teacher-info">
+                        <br>
+                        <h3>Sarah Johnson</h3>
+                        <div class="specialty">Piano & Music Theory</div>
+                        <div class="rating">★★★★★</div>
+                        <a href="{% url 'Student:search_teachers'%}" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+                <div class="teacher-card">
+                    <div class="teacher-img">
+                        <img src="https://i.postimg.cc/cJQFmbsy/photo-1460723237483-7a6dc9d0b212.avif" alt="" class="img-fluid" style="height: fit-content; width: 100%; object-fit: cover; ">
+                    </div>
+                    <div class="teacher-info">
+                        <br>
+                        <h3>Michael Chen</h3>
+                        <div class="specialty">Classical Guitar</div>
+                        <div class="rating">★★★★★</div>
+                        <a href="{% url 'Student:search_teachers'%}" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+                <div class="teacher-card">
+                    <div class="teacher-img">
+                        <img src="https://i.postimg.cc/ZK2jhSnz/photo-1612976023590-be5b6a14051d.avif" alt="" class="img-fluid" style="height: fit-content; width: 100%; object-fit: cover; ">
+                    </div>
+                    <div class="teacher-info">
+                        <br>
+                        <h3>Elena Rodriguez</h3>
+                        <div class="specialty">Vocal Coach</div>
+                        <div class="rating">★★★★★</div>
+                        <a href="{% url 'Student:search_teachers'%}" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="how-it-works">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p class="text-muted">Get started with HARMONY HUB in just a few simple steps</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">1</div>
+                    <h3>Search for Teachers</h3>
+                    <p>Find the perfect music instructor based on your location, instrument, and availability.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">2</div>
+                    <h3>Book a Lesson</h3>
+                    <p>Choose your preferred date and time slot to schedule a lesson with your selected teacher.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">3</div>
+                    <h3>Start Learning</h3>
+                    <p>Begin your musical journey with expert guidance and personalized instruction.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <section class="testimonials">
+        <div class="section-title">
+            <h2 style="color: #1a1a2e;">What Teachers Say</h2>
+            <p style="color: #333;">Hear from other music teachers using HARMONY HUB</p>
+        </div>
+
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-quote" style="color: #666;">"HARMONY HUB has transformed how I manage my music lessons. The booking
+                    system is seamless and my students love the platform."</div>
+                <div class="testimonial-author">
+                    <div class="author-name">Sarah Johnson</div>
+                    <div class="author-title">Piano Teacher</div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-quote" style="color: #666;">"I've been able to grow my student base by 30% since joining HARMONY HUB.
+                    The platform makes scheduling and teaching so much easier."</div>
+                <div class="testimonial-author">
+                    <div class="author-name">Michael Chen</div>
+                    <div class="author-title">Guitar Instructor</div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-quote" style="color: #666;">"The ability to organize my teaching materials and track student progress
+                    all in one place has been a game-changer for my violin studio."</div>
+                <div class="testimonial-author">
+                    <div class="author-name">Emma Rodriguez</div>
+                    <div class="author-title">Violin Teacher</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+            <p>Get answers to common questions about the teacher platform</p>
+        </div>
+
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h3>How do I add a new music section?</h3>
+                <p>Click on the "Add Section" link in the navigation bar, fill out the form with your course details,
+                    and submit. Your new section will be immediately available to your students.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How do I manage my bookings?</h3>
+                <p>Navigate to "My Bookings" to view all your scheduled lessons. From there, you can accept new
+                    bookings, reschedule existing ones, or cancel if necessary.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How are payments processed?</h3>
+                <p>HARMONY HUB handles all payment processing securely. You'll receive payments directly to your linked
+                    account based on your payment preferences.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Can I customize my teacher profile?</h3>
+                <p>Yes! You can update your profile information, add a bio, list your qualifications, and upload a
+                    profile picture to make your profile more appealing to potential students.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready ?</h2>
+            <p>start your first section with your favourite  teacher today!</p>
+            <a href="{% url 'Student:search_teachers'%}" class="action-button">Start Your First Section</a>
+        </div>
+    </section>
+    </div>
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="mb-3">
+                <span class="logo-icon">🎵</span>
+                <span class="h3"
+                    style="background: linear-gradient(45deg, #FFD700, #ff9966); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">HARMONY
+                    HUB</span>
+            </div>
+            <p>&copy; 2025 HARMONY HUB - Connecting Music Teachers and Students</p>
+        </div>
+    </footer>
+</body>
+
+</html>
